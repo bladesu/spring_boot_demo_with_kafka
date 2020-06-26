@@ -1,0 +1,19 @@
+version: "3"
+services:
+    zk:
+        image: zookeeper:3.6.1
+        ports:
+            - "2181:2181"    
+    kafka:
+        build:
+            context: ./context_kafka
+            dockerfile: Dockfile.kafka
+        ports:
+            - "9092"
+        depends_on:
+            - zk
+        environment: 
+            KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+            KAFKA_ZOOKEEPER_CONNECT: zk:2181
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
