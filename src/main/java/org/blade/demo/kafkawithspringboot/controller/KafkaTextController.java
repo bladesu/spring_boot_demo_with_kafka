@@ -1,6 +1,6 @@
 package org.blade.demo.kafkawithspringboot.controller;
 
-import org.blade.demo.kafkawithspringboot.kafka.Producer;
+import org.blade.demo.kafkawithspringboot.kafka.TextProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/kafka")
-public class KafkaController {
-
-    private final Producer producer;
+public class KafkaTextController {
 
     @Autowired
-    KafkaController(Producer producer) {
+    private TextProducer producer;
+
+    @Autowired
+    KafkaTextController(TextProducer producer) {
         this.producer = producer;
     }
 
