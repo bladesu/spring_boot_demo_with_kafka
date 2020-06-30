@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class Consumer {
 
-    private final Logger logger = LoggerFactory.getLogger(Producer.class);
+    private static final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
     @KafkaListener(topics = "users", groupId = "group_id")
     public void consume(String message) throws IOException {
