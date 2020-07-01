@@ -1,0 +1,36 @@
+package org.blade.demo.kafkawithspringboot.kafka;
+
+import org.blade.demo.kafkawithspringboot.model.Image;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
+
+@Service
+@PropertySource("application-img.yml")
+public class FilSysImgProducer extends Producer<Image> {
+
+    private static final Logger logger = LoggerFactory.getLogger(FilSysImgProducer.class);
+    
+    @Value("${mq_img.topic}")
+    protected String topic;
+
+    @Autowired
+    public FilSysImgProducer() {
+        super();
+    }
+
+    @Override
+    protected String getTopic() {
+        return topic;
+    }
+
+    @Override
+    public void sendMessage(Image obj) {
+        logger.info(String.format("#### -> Producing message -> %s", obj.getId()));
+        this.kafkaTemplate.send(getTopic(), obj);
+    }
+
+}
